@@ -2,7 +2,7 @@ class CreateTranslationCenterTranslations < ActiveRecord::Migration
   def change
     # if mysql
     if defined?(ActiveRecord::ConnectionAdapters::Mysql2Adapter).present? && ActiveRecord::Base.connection.instance_of?(ActiveRecord::ConnectionAdapters::Mysql2Adapter)
-      
+
       create_table :translation_center_translations, options: 'CHARACTER SET=utf8' do |t|
         t.integer :translation_key_id
         t.text :value
@@ -23,10 +23,12 @@ class CreateTranslationCenterTranslations < ActiveRecord::Migration
         t.string :status, default: 'pending'
 
         t.timestamps
-      end      
+      end
 
     end
 
     add_index :translation_center_translations, :translation_key_id
+    add_index :translation_center_translations, :lang
+    add_index :translation_center_translations, :status
   end
 end

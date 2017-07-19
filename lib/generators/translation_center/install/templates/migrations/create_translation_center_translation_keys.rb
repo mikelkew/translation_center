@@ -5,12 +5,15 @@ class CreateTranslationCenterTranslationKeys < ActiveRecord::Migration
       t.integer :category_id
       t.datetime :last_accessed
       <% langs.each do |lang| %>
-      t.string :<%= lang.downcase.gsub('-','_') %>_status, default: 'untranslated'
+      t.string :<%= lang.underscore %>_status, default: 'untranslated'
       <% end %>
 
       t.timestamps
     end
 
     add_index :translation_center_translation_keys, :name
+    <% langs.each do |lang| %>
+    add_index :translation_center_translation_keys, :<%= lang.underscore %>_status
+    <% end %>
   end
 end
